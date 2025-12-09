@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Jobs\SendNewArticleNotification;
 
 class ArticleController extends Controller
 {
@@ -33,7 +34,10 @@ class ArticleController extends Controller
             'content.min' => 'Содержание должно быть минимум 10 символов',
         ]);
 
-        Article::create($validated);
+        $article = Article::create($validated);
+
+        // Отправка уведомления модератору через очередь
+        SendNewArticleNotification::dispatch($article);
 
         return redirect()->route('articles.index')->with('success', 'Статья создана');
     }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 
 // Работа 1 + Работа 2: Главная страница с JSON
 Route::get('/', [MainController::class, 'index'])->name('home');
@@ -52,3 +53,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+
+// Маршруты для комментариев
+Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+Route::put('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+// Маршруты модерации комментариев
+Route::middleware(['auth'])->group(function () {
+    Route::get('/comments/moderation', [CommentController::class, 'moderation'])->name('comments.moderation');
+    Route::post('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('comments.approve');
+    Route::post('/comments/{comment}/reject', [CommentController::class, 'reject'])->name('comments.reject');
+});
