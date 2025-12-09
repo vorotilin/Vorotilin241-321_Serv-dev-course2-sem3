@@ -36,8 +36,7 @@ header {
   padding-block: 3vh;
   padding-inline: 5%;
   display: flex;
-  justify-content: left;
-  gap: 10rem;
+  justify-content: space-between;
   align-items: center;
   height: auto;
   border-bottom: solid var(--border-color) 1px;
@@ -45,6 +44,16 @@ header {
 nav {
   display: flex;
   gap: 5rem;
+}
+.auth-section {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.user-name {
+  font-size: 1.6rem;
+  color: var(--accent-color);
+  font-weight: 600;
 }
 h1,
 h2,
@@ -112,12 +121,21 @@ button {
   background-color: var(--accent-color);
   color: var(--default-color);
   border: none;
-  padding: 1rem 2rem;
-  margin-top: 0.5rem;
+  padding: 0.8rem 1.6rem;
   cursor: pointer;
   border-radius: 4px;
-  font-size: 1.6rem;
-  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  transition: 0.3s ease;
+  height: 3.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover {
+  background-color: #3da49d;
 }
 
 button:disabled {
@@ -151,4 +169,222 @@ footer {
   margin-top: 2rem;
   padding: 5rem;
   border-top: 1px solid var(--border-color);
+}
+
+/* Работа 4-5: Стили для статей */
+.articles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.article-item {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  transition: 0.3s ease;
+}
+
+.article-item:hover {
+  border-color: var(--accent-color);
+}
+
+.article-item h2 a {
+  color: var(--default-color);
+  font-size: 2.4rem;
+}
+
+.article-meta {
+  display: flex;
+  gap: 2rem;
+  color: #999;
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+
+.article-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn,
+.btn-secondary,
+.btn-delete,
+.btn-link {
+  padding: 0.8rem 1.6rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  transition: 0.3s ease;
+  height: 3.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+}
+
+.btn {
+  background-color: var(--accent-color);
+  color: var(--default-color);
+  border-color: var(--accent-color);
+}
+
+.btn:hover {
+  background-color: #3da49d;
+  border-color: #3da49d;
+  color: var(--default-color);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border-color: var(--border-color);
+  color: var(--default-color);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background-color: transparent;
+}
+
+.btn-delete {
+  background-color: #c44;
+  border-color: #c44;
+  color: var(--default-color);
+}
+
+.btn-delete:hover {
+  background-color: #a33;
+  border-color: #a33;
+}
+
+.btn-link {
+  color: var(--accent-color);
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+  height: auto;
+}
+
+.btn-link:hover {
+  color: #3da49d;
+}
+
+.article-form {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.article-form textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--background-color);
+  color: var(--default-color);
+  font-family: "Raleway", sans-serif;
+  resize: vertical;
+}
+
+.error {
+  color: #ff4444;
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.alert-success {
+  background-color: #2a5;
+  color: var(--default-color);
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.article-single {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 3rem;
+}
+
+.article-content {
+  margin: 2rem 0;
+  line-height: 1.8;
+  font-size: 1.6rem;
+}
+
+/* Пагинация */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.pagination nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pagination-btn {
+  min-width: 3.8rem;
+  height: 3.8rem;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--card-background);
+  color: var(--default-color);
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  transition: 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: var(--default-color);
+}
+
+.pagination-btn.active {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.pagination-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Контакты */
+.contact-item {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--card-background);
 }
