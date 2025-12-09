@@ -8,13 +8,28 @@
     <link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <nav>
             <a href="{{ route('home') }}">Главная</a>
             <a href="{{ route('about') }}">О нас</a>
             <a href="{{ route('contacts') }}">Контакты</a>
+            <a href="{{ route('articles.index') }}">Новости</a>
+            @auth
+                @can('create', \App\Models\Article::class)
+                    <a href="{{ route('articles.create') }}">Создать новость</a>
+                @endcan
+            @endauth
         </nav>
+
+        <div class="auth-section">
+            @auth
+                <span class="user-name">{{ Auth::user()->name }}</span>
+                <a href="{{ route('logout') }}" class="btn-secondary">Выход</a>
+            @else
+                <a href="{{ route('login.form') }}" class="btn">Вход</a>
+                <a href="{{ route('signin') }}" class="btn-secondary">Регистрация</a>
+            @endauth
+        </div>
     </header>
 
     <!-- Main -->
@@ -26,5 +41,7 @@
     <footer>
         <p>Воротилин Илья Андреевич 241-321</p>
     </footer>
+
+    <script src="{{ asset('auth.js') }}"></script>
 </body>
 </html>

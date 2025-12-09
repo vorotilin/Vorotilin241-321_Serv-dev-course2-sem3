@@ -5,8 +5,12 @@
 @section('content')
 <section>
     <h1>Контакты</h1>
-    <p><strong>ФИО:</strong> {{ $person }}</p>
-    <p><strong>Телефон:</strong> {{ $phone }}</p>
-    <p><strong>Email:</strong> {{ $email }}</p>
+    @foreach($contacts as $contact)
+    <div class="contact-item">
+        <p><strong>ФИО:</strong> {{ $contact['person'] }}</p>
+        <p><strong>Телефон:</strong> {{ $contact['phone'] }}</p>
+        <p><strong>Email:</strong> {{ $contact['email'] }}</p>
+    </div>
+    @endforeach
 </section>
 @endsection
