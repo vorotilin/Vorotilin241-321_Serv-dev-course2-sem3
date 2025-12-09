@@ -10,4 +10,10 @@ class Article extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'content', 'author'];
+
+    // Отношение к комментариям
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -30,5 +30,14 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
+
+        // Gates для комментариев
+        Gate::define('update-comment', function ($user, $comment) {
+            return $user->id === $comment->user_id;
+        });
+
+        Gate::define('delete-comment', function ($user, $comment) {
+            return $user->id === $comment->user_id;
+        });
     }
 }

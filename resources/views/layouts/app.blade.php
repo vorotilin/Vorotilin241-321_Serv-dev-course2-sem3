@@ -18,6 +18,9 @@
                 @can('create', \App\Models\Article::class)
                     <a href="{{ route('articles.create') }}">Создать новость</a>
                 @endcan
+                @if(Auth::user()->isModerator())
+                    <a href="{{ route('comments.moderation') }}">Модерация</a>
+                @endif
             @endauth
         </nav>
 

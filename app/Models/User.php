@@ -52,4 +52,10 @@ class User extends Authenticatable
     {
         return $this->role && $this->role->name === 'moderator';
     }
+
+    // Отношение к комментариям
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
