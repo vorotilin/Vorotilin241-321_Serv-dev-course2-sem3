@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('statistics:daily')->everyMinute();
     }
 
     /**
@@ -30,3 +30,4 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+// Воротилин Илья 241-321

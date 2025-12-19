@@ -17,3 +17,4 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 }
+// Воротилин Илья 241-321

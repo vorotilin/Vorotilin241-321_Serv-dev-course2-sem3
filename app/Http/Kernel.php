@@ -30,5 +30,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'log.article.views' => \App\Http\Middleware\LogArticleViews::class,
     ];
 }
+// Воротилин Илья 241-321

@@ -59,3 +59,4 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 }
+// Воротилин Илья 241-321

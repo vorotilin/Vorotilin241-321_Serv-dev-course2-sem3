@@ -26,3 +26,4 @@ class MainController extends Controller
         return view('galery', ['article' => $article]);
     }
 }
+// Воротилин Илья 241-321

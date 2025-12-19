@@ -25,3 +25,4 @@ class NewArticleNotification extends Mailable
                     ->view('emails.new-article');
     }
 }
+// Воротилин Илья 241-321

@@ -16,3 +16,4 @@ class Role extends Model
         return $this->hasMany(User::class);
     }
 }
+// Воротилин Илья 241-321

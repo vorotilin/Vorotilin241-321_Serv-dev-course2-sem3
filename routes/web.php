@@ -5,6 +5,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotificationController;
 
 // Работа 1 + Работа 2: Главная страница с JSON
 Route::get('/', [MainController::class, 'index'])->name('home');
@@ -52,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show')->middleware('log.article.views');
 
 // Маршруты для комментариев
 Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
@@ -66,3 +67,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('comments.approve');
     Route::post('/comments/{comment}/reject', [CommentController::class, 'reject'])->name('comments.reject');
 });
+
+// Маршрут для уведомлений
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notification.read');
+});
+// Воротилин Илья 241-321

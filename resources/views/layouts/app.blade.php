@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
     <header>
@@ -26,6 +28,23 @@
 
         <div class="auth-section">
             @auth
+                <div class="notifications-dropdown">
+                    <button class="notifications-btn">
+                        Уведомления
+                        @if(Auth::user()->unreadNotifications->count() > 0)
+                            <span class="badge">{{ Auth::user()->unreadNotifications->count() }}</span>
+                        @endif
+                    </button>
+                    <div class="notifications-list">
+                        @forelse(Auth::user()->unreadNotifications as $notification)
+                            <a href="{{ route('notification.read', $notification->id) }}" class="notification-item">
+                                {{ $notification->data['message'] ?? 'Новое уведомление' }}
+                            </a>
+                        @empty
+                            <div class="notification-item">Нет новых уведомлений</div>
+                        @endforelse
+                    </div>
+                </div>
                 <span class="user-name">{{ Auth::user()->name }}</span>
                 <a href="{{ route('logout') }}" class="btn-secondary">Выход</a>
             @else
@@ -35,10 +54,12 @@
         </div>
     </header>
 
-    <!-- Main -->
-    <main>
-        @yield('content')
-    </main>
+    <div id="app">
+        <!-- Main -->
+        <main>
+            @yield('content')
+        </main>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -46,5 +67,6 @@
     </footer>
 
     <script src="{{ asset('auth.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

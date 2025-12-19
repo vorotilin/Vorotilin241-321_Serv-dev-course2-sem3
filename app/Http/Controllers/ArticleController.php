@@ -5,12 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Jobs\SendNewArticleNotification;
+use App\Events\NewArticleEvent;
+use App\Notifications\NewArticleNotification;
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
+        $page = $request->get('page', 1);
+        $cacheKey = 'articles_page_' . $page;
+
+        $articles = Cache::remember($cacheKey, 3600, function () {
+            return Article::orderBy('created_at', 'desc')->paginate(10);
+        });
+
         return view('articles.index', compact('articles'));
     }
 
@@ -37,14 +48,37 @@ class ArticleController extends Controller
         $article = Article::create($validated);
 
         // Отправка уведомления модератору через очередь
-        SendNewArticleNotification::dispatch($article);
+        try {
+            SendNewArticleNotification::dispatch($article);
+        } catch (\Exception $e) {
+            // Логируем ошибку, но не прерываем создание статьи
+            \Log::error('Ошибка отправки email: ' . $e->getMessage());
+        }
+
+        // Отправка пуш-уведомления
+        event(new NewArticleEvent($article));
+
+        // Отправка уведомлений читателям (всем пользователям)
+        $readers = User::all();
+        Notification::send($readers, new NewArticleNotification($article));
+
+        // Очистка кеша главной страницы и всех страниц пагинации
+        Cache::forget('articles_page_1');
+        for ($i = 2; $i <= 10; $i++) {
+            Cache::forget('articles_page_' . $i);
+        }
 
         return redirect()->route('articles.index')->with('success', 'Статья создана');
     }
 
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        $cacheKey = 'article_' . $id;
+
+        $article = Cache::rememberForever($cacheKey, function () use ($id) {
+            return Article::with('comments')->findOrFail($id);
+        });
+
         return view('articles.show', compact('article'));
     }
 
@@ -72,6 +106,9 @@ class ArticleController extends Controller
 
         $article->update($validated);
 
+        // Очистка всего кеша
+        Cache::flush();
+
         return redirect()->route('articles.index')->with('success', 'Статья обновлена');
     }
 
@@ -81,6 +118,10 @@ class ArticleController extends Controller
         $this->authorize('delete', $article);
         $article->delete();
 
+        // Очистка всего кеша
+        Cache::flush();
+
         return redirect()->route('articles.index')->with('success', 'Статья удалена');
     }
 }
+// Воротилин Илья 241-321

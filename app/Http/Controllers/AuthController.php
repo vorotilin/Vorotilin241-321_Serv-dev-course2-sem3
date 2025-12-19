@@ -80,3 +80,4 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 }
+// Воротилин Илья 241-321

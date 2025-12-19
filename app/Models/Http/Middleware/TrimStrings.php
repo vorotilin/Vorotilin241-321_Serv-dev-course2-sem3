@@ -17,3 +17,4 @@ class TrimStrings extends Middleware
         'password_confirmation',
     ];
 }
+// Воротилин Илья 241-321
