@@ -28,7 +28,7 @@ class SendNewArticleNotification implements ShouldQueue
     public function handle()
     {
         // Отправка уведомления модератору
-        $moderatorEmail = env('MODERATOR_EMAIL', 'moderator@example.com');
+        $moderatorEmail = env('MODERATOR_EMAIL', 'ilyatelik@gmail.com');
         Mail::to($moderatorEmail)->send(new NewArticleNotification($this->article));
 
         // Отправка уведомлений всем пользователям
